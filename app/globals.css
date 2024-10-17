@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes rain {
+    from {
+      top: -100px;
+    }
+    to {
+      top: 100vh;
+    }
+  }
+
+  * {
+    @apply scroll-smooth;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+
+  .anywhere {
+    overflow-wrap: anywhere;
+  }
+
+  /* effect */
+  .e1 {
+    @apply font-supercell-magic font-semibold;
+  }
+
+  .e2 {
+    @apply font-supercell-magic font-semibold text-white;
+
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: #563b00;
+
+    filter: drop-shadow(0px 4px 0px #563b00);
+
+    paint-order: stroke fill;
+  }
+
+  .e3 {
+    @apply font-supercell-magic font-semibold text-white;
+
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: #ff7f00;
+
+    filter: drop-shadow(0px 4px 0px #ff7f00);
+
+    paint-order: stroke fill;
+  }
+
+  .e4 {
+    color: #ff8000;
+
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: #563b00;
+
+    filter: drop-shadow(0px 4px 0px #563b00);
+
+    paint-order: stroke fill;
+  }
+
+  h1,
+  .h1 {
+    @apply text-[24px] tracking-[1.6px] md:text-[32px];
+  }
+
+  h2,
+  .h2 {
+    @apply text-[24px] font-semibold tracking-[1.6px] md:text-[40px];
+  }
+
+  h3,
+  .h3 {
+    @apply text-[20px] font-semibold tracking-[1.6px] md:text-[24px];
+  }
+
+  p,
+  .p1 {
+    @apply text-[16px] tracking-[0.48px] md:text-[24px];
+  }
+  .p2 {
+    @apply text-[16px] tracking-[0.36px] md:text-[18px];
+  }
+  .p3 {
+    @apply text-[16px] tracking-[0.36px];
+  }
+}
