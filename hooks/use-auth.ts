@@ -4,9 +4,14 @@ import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSnapshot } from 'valtio'
 
-import { authStore, clearAuth, startLogin } from '@/stores/auth'
+import { authStore, clearAuth } from '@/stores/auth'
+import { statusStore } from '@/stores/status'
+
+import usePart from './use-part'
 
 export default function useAuth() {
+  const { random } = usePart()
+
   const auth = useSnapshot(authStore)
 
   const { setVisible: setModalVisible } = useWalletModal()
@@ -33,7 +38,7 @@ export default function useAuth() {
 
   const login = useCallback(
     async ({ isDisconnect = true }: { isDisconnect?: boolean } = {}) => {
-      startLogin()
+      statusStore.isLogining = true
 
       if (isDisconnect) onDisconnect?.()
 
@@ -45,7 +50,8 @@ export default function useAuth() {
   const logout = useCallback(() => {
     clearAuth()
     onDisconnect?.()
-  }, [onDisconnect])
+    random()
+  }, [onDisconnect, random])
 
   return {
     login,

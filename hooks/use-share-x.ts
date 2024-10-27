@@ -10,7 +10,9 @@ export default function useShareX({
   hashtags?: string[]
 } = {}) {
   const openTwitterShareWindow = useCallback(() => {
-    const _text = text ?? 'share'
+    const _text =
+      text ??
+      "No more PVP! 🫵\nI just collected my $MMK which only true meme lovers can collect!\nLet's keep building together and make #Memeking 👑 @memekingclub ignite this meme supercycle! 💥\n"
 
     const _url = new URL(url ?? (typeof window === 'undefined' ? '' : window.location.href))
 

@@ -28,6 +28,7 @@ import useAuth from '@/hooks/use-auth'
 import useClaim from '@/hooks/use-claim'
 import useError from '@/hooks/use-error'
 import { useModal } from '@/hooks/use-modal'
+import { useShareUrl } from '@/hooks/use-share-url'
 import useShareX from '@/hooks/use-share-x'
 import { lamportsToSol } from '@/utils/converts'
 import { beautifyAddress, formatSol } from '@/utils/formaters'
@@ -42,12 +43,12 @@ const informations = [
   {
     title: 'Claim Your SOL',
     detail:
-      'Every time you receive a meme token, a unique account is created in your wallet. When you trade or send that token, the account remains empty and useless, but it still consumes resources. Creating each of these accounts costs about 0.002 SOL in rent, which is held by the network permanently unless you take action.',
+      'Memeking helps you close these inactive accounts, reclaiming the locked SOL and returning it to you. A small portion supports the development of the Memeking platform.',
   },
   {
     title: 'What Is This Rent?',
     detail:
-      'Every time you receive a meme token, a unique account is created in your wallet. When you trade or send that token, the account remains empty and useless, but it still consumes resources. Creating each of these accounts costs about 0.002 SOL in rent, which is held by the network permanently unless you take action.',
+      'Solana currently charges users 2 years worth of rent for every account created to storage, maintain the data and process transactions with those accounts. You can find more information in the official Solana Documentation.',
   },
 ]
 
@@ -145,11 +146,12 @@ function AddressButton() {
 
 export function Claim() {
   const { openTwitterShareWindow } = useShareX({
-    text: 'share',
+    text: `Have fun in SOL Meme & NFT journey? 🥳\nDon't forget to Grab your SOL & free $MMK token.👑\n\nSolana Blockchain keeps your SOL! 🔒#Memeking helps you get it back!  🤑💰\n`,
     url: typeof window === 'undefined' ? '' : window.location.href,
   })
 
   const { balance } = useClaim()
+  const { currentUrl } = useShareUrl()
 
   const { isLogin } = useAuth()
   const { account } = useAccount()
@@ -167,7 +169,7 @@ export function Claim() {
 
     const closeLoading = showComing({
       title: 'GRAB YOUR SOL',
-      msg: 'Waiting for your confirmation to grab SOL & Memeking Point',
+      msg: 'Waiting for your confirmation to grab SOL & $Memeking Token',
     })
 
     try {
@@ -177,9 +179,9 @@ export function Claim() {
         title: 'CONGRATULATION',
         content: (
           <>
-            <div>
+            <div className="text-center">
               Claim successful! Don&apos;t forget to refer your friends and receive 40% of the
-              included donations and Memeking Points.
+              included donations and $MemeKing Token.
             </div>
           </>
         ),
@@ -189,6 +191,7 @@ export function Claim() {
       try {
         handleError(error)
       } catch {
+        console.error(error)
         toast.error('Could not submit claim, requested resource not available.')
       }
     } finally {
@@ -210,7 +213,7 @@ export function Claim() {
       <div className="px-[20px]">
         <div className="mt-[40px] flex flex-col items-center text-center">
           <div className="p1 mb-[10px] capitalize">Solana Blockchain Keeps Your SOL!</div>
-          <h1 className="mb-[20px] flex gap-x-4 capitalize max-lg:flex-col">
+          <h1 className="mb-[20px] flex gap-x-4 gap-y-3 capitalize max-lg:flex-col">
             <div className="e3">Memeking</div>
             <div className="e1">Helps you get it back !</div>
           </h1>
@@ -223,10 +226,10 @@ export function Claim() {
           </div>
           <div className="mb-[35px] flex w-full items-center justify-center gap-[20px] max-md:flex-col">
             <div className="w-full max-w-[400px] rounded-lg border-2 border-[#563B00] bg-background px-[20px] py-[10px] shadow-[0px_4px_0px_0px_#563B00]">
-              <div className="h3">Claimed Memeking Point</div>
+              <div className="h3">Claimed $MMK Token</div>
               <div className="flex items-center justify-center text-point">
                 <span className="h2 mr-[10px]">{account ? account.closedAccountPoints : '-'}</span>
-                <span className="h3">Point</span>
+                <span className="h3">Token</span>
               </div>
             </div>
             <div className="w-full max-w-[400px] rounded-lg border-2 border-[#563B00] bg-background px-[20px] py-[10px] shadow-[0px_4px_0px_0px_#563B00]">
@@ -256,10 +259,10 @@ export function Claim() {
                 <span className="font-semibold text-point">0.012345 Point</span>
               </div> */}
           </div>
-          <div>Refer your friends and receive 40% of the included donation & Memeking Point</div>
+          <div>Refer your friends and get 40% of the included donation & extra 10% $MMK !</div>
           <div className="mb-[30px] flex items-center">
             <OnlyClient>
-              <div className="anywhere mr-2 text-point">{getWindow()?.location.href}</div>
+              <div className="anywhere mr-2 text-point">{currentUrl}</div>
             </OnlyClient>
             <Copy
               onClick={async () => {
@@ -287,7 +290,7 @@ export function Claim() {
                 <span className="h3 text-point">{formatSol(totalSOLToClaim)}</span>
               </div>
               <div className="mb-[20px] flex w-full justify-between">
-                <span className="p1">Total Memeking point to Claim:</span>
+                <span className="p1">Total $MMK to Claim:</span>
                 <span className="h3 text-point">
                   {PER_ACCOUNT_POINT * (emptyTokenAccounts?.length ?? 0)}
                 </span>

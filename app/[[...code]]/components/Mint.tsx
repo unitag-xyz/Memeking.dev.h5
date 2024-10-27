@@ -27,8 +27,11 @@ import useMint from '@/hooks/use-mint'
 import { useModal } from '@/hooks/use-modal'
 import usePart from '@/hooks/use-part'
 import useShareX from '@/hooks/use-share-x'
+import { useModalContext } from '@/modules/dialog'
 import { loadImage } from '@/utils/image'
 import { getWindow } from '@/utils/window'
+
+import DetailDialog from './DetailDialog'
 
 function Memeking({
   onComposeDataPropsChange,
@@ -328,6 +331,22 @@ function Memeking({
   )
 }
 
+function DetailButton({ className = '' }: CustomProps) {
+  const { showModal } = useModalContext()
+
+  return (
+    <div
+      className={twMerge(
+        'cursor-pointer text-[24px] leading-normal text-point underline',
+        className,
+      )}
+      onClick={() => showModal(<DetailDialog />)}
+    >
+      Learn more
+    </div>
+  )
+}
+
 function UnAuthMint() {
   const { login } = useAuth()
   return (
@@ -336,29 +355,31 @@ function UnAuthMint() {
       <div className="mx-auto flex max-w-[1000px] items-center justify-between px-[40px] pt-20 max-md:hidden">
         <div className="relative">
           <Crown className="absolute left-[-80px] top-[-100px] -z-50" />
-          <div className="relative">
+          <div className="relative mb-[10px]">
             <Spatter className="absolute left-[150px] top-[-20px]" />
             {/* <WhoIsMemekingLeft className="mb-[10px]" /> */}
             <h1 className="e1 mb-[10px]">Who Is</h1>
             <h1 className="e3">MEMEKING</h1>
           </div>
-          <p className="mb-[30px] capitalize">Memeking CultPad S1: SOL Season Kicks Off!</p>
+          <p className="mb-[30px] capitalize">May the meme be with you !</p>
           <Button isShadow onPress={login} className="mb-[20px] capitalize">
             Crown me, baby!
           </Button>
-          <div className="p2 capitalize">Get Your Memeking Token & SBT</div>
+          <DetailButton className="w-fit" />
+          {/* <div className="p2 capitalize">Get Your MemeKing Token & SBT</div> */}
         </div>
         <Memeking className="mb-[68px]" />
       </div>
       <div className="flex flex-col items-center px-[40px] pt-[20px] text-center md:hidden">
         <h1 className="e1 mb-[10px]">Who Is</h1>
         <h1 className="e3">MEMEKING</h1>
-        <p className="mb-[20px] capitalize">Memeking CultPad S1: SOL Season Kicks Off!</p>
+        <p className="mb-[20px] capitalize">May the meme be with you !</p>
         <Memeking className="mb-[20px]" />
         <Button isShadow className="mb-[20px] capitalize">
           Crown me, baby!
         </Button>
-        <div className="p2 mb-[36px] capitalize">Get Your Memeking Token & SBT</div>
+        <DetailButton className="mb-[36px]" />
+        {/* <div className="p2 mb-[36px] capitalize">Get Your MemeKing Token & SBT</div> */}
       </div>
     </>
   )
@@ -391,7 +412,7 @@ function AuthedMint() {
 
   const confirmEvm = useCallback(async () => {
     if (evm === '') {
-      toast.error('Please enter your EVM address.')
+      toast.error('Please enter your Ethereum address to receive future airdrops from EVM chains.')
       return
     }
 
@@ -428,6 +449,12 @@ function AuthedMint() {
 
   const mintMemeking = useCallback(async () => {
     if (composeDataProps) {
+      toast.success(
+        'We’re working with Blowfish team to fix the security alert. Thanks for your patience.',
+        {
+          duration: 6000,
+        },
+      )
       const close = showComing({
         title: 'Mint MemeKing',
         msg: 'Waiting for Confirmation ..',
@@ -461,7 +488,8 @@ function AuthedMint() {
         try {
           handleError(error)
         } catch {
-          toast.error('Could not submit claim, requested resource not available.')
+          console.error(error)
+          toast.error('Could not submit collet, requested resource not available.')
         }
       } finally {
         close?.()
@@ -488,7 +516,7 @@ function AuthedMint() {
         content: (
           <>
             <div>You are {info?.title}</div>
-            <div>{account.totalPoints} Memeking Token Point</div>
+            <div>{account.totalPoints} $MemeKing Token</div>
           </>
         ),
         footer: <Button onPress={openTwitterShareWindow}>Share to X</Button>,
@@ -516,31 +544,49 @@ function AuthedMint() {
             Get <span className="h2 text-point">{levelInfo?.point}</span> MemeKing Token Point
           </p> */}
           <p className="mb-[30px] capitalize">
-            <span className="h2 text-point">{account?.totalPoints}</span> MemeKing Point
+            {(() => {
+              if (status === 'not-mint')
+                return (
+                  <>
+                    <span className="h2 text-point">{account?.totalPoints}</span> $MMK available for
+                    collet
+                  </>
+                )
+              else
+                return (
+                  <>
+                    Hold <span className="h2 text-point">{account?.totalPoints}</span> $MMK Now
+                  </>
+                )
+            })()}
           </p>
-          <div className="mb-[20px] flex items-center gap-x-[10px]">
-            <Button onPress={mintMemeking} isShadow className="capitalize">
-              Mint SBT
-            </Button>
-            <div className="h3 text-point">/{levelInfo?.cost} SOL</div>
-          </div>
+          {/* <Button onPress={mintMemeking} isShadow className="capitalize">
+            Mint SBT
+          </Button> */}
           {status === 'not-mint' && (
             <>
-              <div className="p2 capitalize">1.Activate Points to Get $MMK Token</div>
-              <div className="p2 capitalize">2.Enter the Airdrop List for All Cults</div>
-              <div className="p2 mb-[30px] capitalize">3.Share 80% of CultPad Revenue</div>
+              <div className="mb-[20px] flex items-center gap-x-[10px]">
+                <Button onPress={mintMemeking} isShadow className="capitalize">
+                  Collect $MMK
+                </Button>
+                <div className="h3 text-point">/{levelInfo?.cost} SOL</div>
+              </div>
+              <div className="p2 capitalize">1.Get exclusive Memeking SBT</div>
+              <div className="p2 mb-[10px] capitalize">2.Share 80% of CultPad Revenue </div>
+              <DetailButton className="mb-[10px] w-fit" />
             </>
           )}
           {status === 'minted' && (
             <>
               <Link href="#tasks">
                 <Button className="mb-[20px]" isShadow>
-                  Get More MemeKing Point
+                  Get More $MMK
                 </Button>
               </Link>
-              <div className="p2 mb-[30px] capitalize">
-                Collect more Memeking Points = Memeking Token
+              <div className="p2 mb-[10px] capitalize">
+                Collect More $MMK, Earn More From CultPad
               </div>
+              <DetailButton className="mb-[10px] w-fit" />
             </>
           )}
           {status === 'can-upgrade' && (
@@ -555,10 +601,9 @@ function AuthedMint() {
                   </div>
                 )}
               </div>
-              <div className="p2 capitalize">1.Collect more Memeking Points = Memeking Token</div>
-              <div className="p2 mb-[30px] capitalize">
-                2.Upgrading your SBT level boosts airdrop weight
-              </div>
+              <div className="p2 capitalize">1. Collect More $MMK, Earn More From CultPad</div>
+              <div className="p2 mb-[10px] capitalize">2. Upgrading SBT Level To Get More $MMK</div>
+              <DetailButton className="mb-[10px] w-fit" />
             </>
           )}
           <div className="mb-[10px] flex items-center gap-x-[10px]">
@@ -589,32 +634,46 @@ function AuthedMint() {
           Get <span className="h2 text-point">{levelInfo?.point}</span> MemeKing Token Point
         </p> */}
         <p className="mb-[22px] capitalize">
-          <span className="h2 text-point">{account?.totalPoints}</span> MemeKing Point
+          {(() => {
+            if (status === 'not-mint')
+              return (
+                <>
+                  <span className="h2 text-point">{account?.totalPoints}</span> $MMK available for
+                  collet
+                </>
+              )
+            else
+              return (
+                <>
+                  Hold <span className="h2 text-point">{account?.totalPoints}</span> $MMK Now
+                </>
+              )
+          })()}
         </p>
         <Memeking onComposeDataPropsChange={setComposeDataProps} />
-        <div className="mb-[20px] flex items-center gap-x-[10px]">
-          <Button onPress={mintMemeking} isShadow className="capitalize">
-            Mint SBT
-          </Button>
-          <div className="h3 text-point">/{levelInfo?.cost} SOL</div>
-        </div>
+
         {status === 'not-mint' && (
           <>
-            <div className="p2 capitalize">1.Activate Points to Get $MMK Token</div>
-            <div className="p2 capitalize">2.Enter the Airdrop List for All Cults</div>
-            <div className="p2 mb-[30px] capitalize">3.Share 80% of CultPad Revenue</div>
+            <div className="mb-[20px] flex items-center gap-x-[10px]">
+              <Button onPress={mintMemeking} isShadow className="capitalize">
+                Collect $MMK
+              </Button>
+              <div className="h3 text-point">/{levelInfo?.cost} SOL</div>
+            </div>
+            <div className="p2 capitalize">1.Get exclusive Memeking SBT</div>
+            <div className="p2 mb-[10px] capitalize">2.Share 80% of CultPad Revenue </div>
+            <DetailButton className="mb-[10px]" />
           </>
         )}
         {status === 'minted' && (
           <>
             <Link href="#tasks">
               <Button className="mb-[20px]" isShadow>
-                Get More MemeKing Point
+                Get More $MMK
               </Button>
             </Link>
-            <div className="p2 mb-[30px] capitalize">
-              Collect more Memeking Points = Memeking Token
-            </div>
+            <div className="p2 mb-[10px] capitalize">Collect More $MMK, Earn More From CultPad</div>
+            <DetailButton className="mb-[10px]" />
           </>
         )}
         {status === 'can-upgrade' && (
@@ -629,10 +688,9 @@ function AuthedMint() {
                 </div>
               )}
             </div>
-            <div className="p2 capitalize">1.Collect more Memeking Points = Memeking Token</div>
-            <div className="p2 mb-[30px] capitalize">
-              2.Upgrading your SBT level boosts airdrop weight
-            </div>
+            <div className="p2 capitalize">1. Collect More $MMK, Earn More From CultPad</div>
+            <div className="p2 mb-[10px] capitalize">2. Upgrading SBT Level To Get More $MMK</div>
+            <DetailButton className="mb-[10px]" />
           </>
         )}
 

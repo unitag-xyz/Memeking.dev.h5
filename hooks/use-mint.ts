@@ -6,7 +6,7 @@ import { setComputeUnitLimit, transferSol } from '@metaplex-foundation/mpl-toolb
 import { generateSigner, publicKey, sol, some, transactionBuilder } from '@metaplex-foundation/umi'
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
 import { walletAdapterIdentity } from '@metaplex-foundation/umi-signer-wallet-adapters'
-import { useWallet, useConnection } from '@solana/wallet-adapter-react'
+import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { clusterApiUrl } from '@solana/web3.js'
 import bs58 from 'bs58'
 import { useCallback, useMemo } from 'react'
@@ -16,7 +16,6 @@ import { submitMintTransaction } from '@/apis/mint'
 import useAccount from './use-account'
 
 export default function useMint() {
-
   const { connection } = useConnection()
 
   const network = process.env.NEXT_PUBLIC_CHAIN_ID as ChainID
@@ -58,16 +57,21 @@ export default function useMint() {
           }),
         )
         .setVersion('legacy')
-        .send(umi);
+        .send(umi)
       //        AndConfirm(umi, { confirm: { commitment: 'confirmed' } })
       while (true) {
-        await new Promise((resolve) => setTimeout(resolve, 3000)); 
-        var status = await connection.getSignatureStatuses([bs58.encode(txMint)], { searchTransactionHistory: true })
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+        var status = await connection.getSignatureStatuses([bs58.encode(txMint)], {
+          searchTransactionHistory: true,
+        })
         if (status.value[0]?.err != null) {
           throw new Error(`Transaction failed: ${status.value[0]?.err}`)
         }
-        if (status.value[0]?.confirmationStatus == 'finalized' || status.value[0]?.confirmationStatus == 'confirmed')
-          break;
+        if (
+          status.value[0]?.confirmationStatus == 'finalized' ||
+          status.value[0]?.confirmationStatus == 'confirmed'
+        )
+          break
       }
 
       const result = await submitMintTransaction({
@@ -79,7 +83,7 @@ export default function useMint() {
 
       return result
     },
-    [endpoint, levelInfo, mutateAccount, wallet],
+    [connection, endpoint, levelInfo, mutateAccount, wallet],
   )
 
   return { mint }

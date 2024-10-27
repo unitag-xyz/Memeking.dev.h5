@@ -23,7 +23,7 @@ export default function Uga() {
         </h1>
       </div>
       <p className="mb-[30px] text-center capitalize">
-        Connecting meme tokens with a vast targeted group of meme degens
+        A multi-tool launchpad turning Memes into Cults
       </p>
       <div className="mx-auto grid aspect-[3/2] w-full max-w-[900px] grid-cols-3 grid-rows-2 gap-[30px] max-md:hidden">
         <div className="relative col-span-2 row-span-1 flex items-end justify-center overflow-hidden rounded-[12px] bg-[#FFDB8D] p-[55px] text-center font-semibold">

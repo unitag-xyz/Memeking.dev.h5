@@ -62,6 +62,15 @@
     paint-order: stroke fill;
   }
 
+  .strokeshadow-brown-2 {
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #563b00;
+
+    filter: drop-shadow(0px 2px 0px #563b00);
+
+    paint-order: stroke fill;
+  }
+
   h1,
   .h1 {
     @apply text-[24px] tracking-[1.6px] md:text-[32px];

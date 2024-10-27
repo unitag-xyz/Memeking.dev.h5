@@ -84,15 +84,15 @@ export function CongratulationModalProvider({ children }: { children: ReactNode 
               <div className="e2 absolute top-[-5px] z-50 w-full text-center text-[18px] uppercase sm:top-[-35px] sm:text-[24px]">
                 Congratulation
               </div>
-              <div className="relative h-max overflow-hidden rounded-[12px] bg-[#FFEFD4] px-[48px] py-[16px]">
+              <div className="relative h-max overflow-hidden rounded-[12px] bg-[#FFEFD4] px-[80px] py-[16px]">
                 <Close
                   className="absolute right-[16px] top-[12px] z-50 cursor-pointer"
                   onClick={() => closeModal(modal.id)}
                 />
                 <Dots className="absolute bottom-0 left-0 right-0 top-0 m-auto w-[340px] opacity-50" />
-                <Left className="absolute bottom-0 left-0 z-50" />
-                <Right className="absolute bottom-0 right-0 z-50" />
-                <div className="relative z-20 flex min-h-[260px] flex-col justify-center">
+                <Left className="absolute bottom-0 left-0 z-40" />
+                <Right className="absolute bottom-0 right-0 z-40" />
+                <div className="relative z-50 flex min-h-[260px] flex-col justify-center">
                   {modal.content}
                 </div>
               </div>

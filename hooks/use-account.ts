@@ -1,7 +1,7 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import useSWRImmutable from 'swr/immutable'
+import useSWR from 'swr/immutable'
 
 import {
   getAccountInfo,
@@ -12,7 +12,7 @@ import {
 import { LEVELS, MAX_LEVEL } from '@/constants/levels'
 import { solToLamports } from '@/utils/converts'
 
-import useAuth from './use-auth'
+import useAuthStatus from './use-auth-status'
 import useClaim from './use-claim'
 
 export default function useAccount() {
@@ -20,9 +20,9 @@ export default function useAccount() {
   const { connection } = useConnection()
   const { publicKey, sendTransaction } = useWallet()
 
-  const { isLogin } = useAuth()
+  const { isLogin } = useAuthStatus()
 
-  const { data: account, mutate: mutateAccount } = useSWRImmutable(['account', isLogin], () => {
+  const { data: account, mutate: mutateAccount } = useSWR(['account', isLogin, publicKey], () => {
     if (isLogin) {
       return getAccountInfo()
     }
@@ -131,7 +131,7 @@ export default function useAccount() {
     tx.feePayer = publicKey
     tx.recentBlockhash = latestBlockhash.blockhash
 
-    const signature = await sendTransaction(tx, connection) 
+    const signature = await sendTransaction(tx, connection)
     // await connection.confirmTransaction(
     //   {
     //     signature: signature,
@@ -141,15 +141,19 @@ export default function useAccount() {
     //   'confirmed',
     // )
     while (true) {
-      await new Promise((resolve) => setTimeout(resolve, 3000)); 
-      var status = await connection.getSignatureStatuses([signature], { searchTransactionHistory: true })
+      await new Promise((resolve) => setTimeout(resolve, 3000))
+      var status = await connection.getSignatureStatuses([signature], {
+        searchTransactionHistory: true,
+      })
       if (status.value[0]?.err != null) {
         throw new Error(`Transaction failed: ${status.value[0]?.err}`)
       }
-      if (status.value[0]?.confirmationStatus == 'finalized' || status.value[0]?.confirmationStatus == 'confirmed')
-        break;
-    } 
-
+      if (
+        status.value[0]?.confirmationStatus == 'finalized' ||
+        status.value[0]?.confirmationStatus == 'confirmed'
+      )
+        break
+    }
 
     const result = await upgradeLevelApi({
       txHash: signature,

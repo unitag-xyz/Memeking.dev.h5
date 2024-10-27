@@ -66,9 +66,9 @@ function ConnectButton() {
       {menuOpen && (
         <OutsideClick
           onOutsideClick={() => setMenuOpen(false)}
-          className="absolute right-0 top-[80px] min-w-[240px] rounded-lg border border-[#563B00] bg-[#FFEFD4] p-[20px] shadow-[0px_4px_4px_0px] shadow-main"
+          className="absolute right-0 top-[80px] min-w-[240px] rounded-lg border border-[#563B00] bg-[#FFEFD4] px-[20px] py-[10px] shadow-[0px_4px_4px_0px] shadow-main"
         >
-          <div className="mb-[16px] px-[8px]">Profile</div>
+          <div className="my-[16px] px-[8px]">Profile</div>
           <MenuItem isDivider>
             <div className="h-[24px] w-[24px] overflow-hidden rounded-full border-[1.75px] border-main">
               <Avatar />
@@ -257,22 +257,23 @@ export default function Navigator() {
           DIY
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent className="max-sm:hidden" justify="end">
+      <NavbarContent justify="end">
         <NavbarItem>
           <BackgroundMusic />
         </NavbarItem>
+      </NavbarContent>
+      <NavbarContent className="!grow-0 max-sm:hidden" justify="end">
         <NavbarItem>
           {/* <WalletMultiButton /> */}
           <ConnectButton />
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent className="sm:hidden" justify="end">
+      <NavbarContent className="!grow-0 sm:hidden" justify="end">
         <NavbarItem>
-          <BackgroundMusic />
+          <HamburgerMenu>
+            <Menu />
+          </HamburgerMenu>
         </NavbarItem>
-        <HamburgerMenu>
-          <Menu />
-        </HamburgerMenu>
       </NavbarContent>
     </Navbar>
   )

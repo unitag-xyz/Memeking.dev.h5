@@ -48,7 +48,7 @@ function Task({
             'justify-end': point === undefined,
           })}
         >
-          {point !== undefined && <h3 className="font-semibold text-[#FF8000]">{point} point</h3>}
+          {point !== undefined && <h3 className="font-semibold text-[#FF8000]">{point} $MMK</h3>}
           {isCompleted ? (
             <Button isShadow className="h-[50px] bg-[#ababab] capitalize lg:w-[200px]">
               Done
@@ -90,7 +90,7 @@ function ClaimTask() {
     <Task
       label="Claim"
       icon={<Claim />}
-      text="Claim Your Sol & Get Point"
+      text="Claim Your Sol & Get $MMK"
       point={account?.closedAccountPoints}
       index={2}
       isCompleted={false}
@@ -107,7 +107,7 @@ function InviteTask() {
     <Task
       label="Share"
       icon={<Invite />}
-      text="invite get 10% referral point"
+      text="invite get 10% referral $MMK"
       point={account?.refferalPoints}
       index={3}
       isCompleted={false}
@@ -124,18 +124,17 @@ export default function Tasks() {
         <div className="mx-auto flex max-w-[1200px] items-center justify-between pb-[30px] pt-[60px] max-md:flex-col">
           <div className="relative w-full max-w-[478px] grow">
             <Crown />
-            <div className="absolute bottom-[130px] w-full text-center">
+            <div className="absolute bottom-[105px] w-full text-center">
               <div className="h2 e4">
                 {account
                   ? account.sbtPoints + account.closedAccountPoints + account.refferalPoints
                   : '-'}
               </div>
-              <div className="p1">Point</div>
+              <div className="p1">Token</div>
             </div>
-            <p className="text-center">MemeKing Point = Memeking Token</p>
             <div className="flex justify-center">
               <Star />
-              <div className="p2 max-md:mb-[10px]">Only Mint SBT Can Get Token</div>
+              <p className="text-center max-md:mb-[10px]">Join Telegram to get more $MMK</p>
             </div>
           </div>
           <div className="flex flex-col gap-y-[10px]">

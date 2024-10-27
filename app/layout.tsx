@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 
 import { DynaPuffFont } from '@/font'
 import { SupercellMagicFont } from '@/font'
+import { ModalProvider as CommonModalProvider } from '@/modules/dialog'
 import AppWalletProvider from '@/provides/AppWalletProvider'
 import BackgroundMusicProvider from '@/provides/BackgroundMusicProvider'
 import { CongratulationModalProvider } from '@/provides/CongratulationModalProvider'
@@ -39,17 +40,19 @@ export default function RootLayout({
       <body className="select-none">
         <RainProvider>
           <AppWalletProvider>
-            <CongratulationModalProvider>
-              <ModalProvider>
-                <InitProvider>
-                  <BackgroundMusicProvider>
-                    <Navigator />
-                    {children}
-                    <Footer />
-                  </BackgroundMusicProvider>
-                </InitProvider>
-              </ModalProvider>
-            </CongratulationModalProvider>
+            <CommonModalProvider>
+              <CongratulationModalProvider>
+                <ModalProvider>
+                  <InitProvider>
+                    <BackgroundMusicProvider>
+                      <Navigator />
+                      {children}
+                      <Footer />
+                    </BackgroundMusicProvider>
+                  </InitProvider>
+                </ModalProvider>
+              </CongratulationModalProvider>
+            </CommonModalProvider>
           </AppWalletProvider>
         </RainProvider>
         <Toaster

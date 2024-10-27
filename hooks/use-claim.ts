@@ -9,25 +9,28 @@ import { getAccountInfo } from '@/apis/account'
 import { submitCloseTransaction } from '@/apis/claim'
 import { lamportsToSol } from '@/utils/converts'
 
-import useAuth from './use-auth'
+import useAuthStatus from './use-auth-status'
 
-export default function useSolana() {
+export default function useClaim() {
   const { connection } = useConnection()
 
   const { publicKey, sendTransaction } = useWallet()
 
-  const { isLogin } = useAuth()
-  const { data: account, mutate: mutateAccount } = useSWR(['account', isLogin], () => {
+  const { isLogin } = useAuthStatus()
+  const { data: account, mutate: mutateAccount } = useSWR(['account', isLogin, publicKey], () => {
     if (isLogin) {
       return getAccountInfo()
     }
   })
 
-  const { data: balance } = useSWR(['balance', publicKey], async () => {
-    if (publicKey) {
-      return await connection.getBalance(publicKey)
-    }
-  })
+  const { data: balance, mutate: mutateBalance } = useSWR(
+    ['balance', isLogin, publicKey],
+    async () => {
+      if (isLogin && publicKey) {
+        return await connection.getBalance(publicKey)
+      }
+    },
+  )
 
   const { data: tokenAccounts, mutate: mutateTokenAccounts } = useSWR(
     ['token-accounts', publicKey],
@@ -80,7 +83,7 @@ export default function useSolana() {
       _.sum(emptyTokenAccounts.map((tokenAccount) => tokenAccount.account.lamports)) * 0.2,
     )
 
-    const parentFee = account.parent ? Math.floor(fee * 0.2) : 0
+    const parentFee = account.parent ? Math.floor(fee * 0.4) : 0
 
     const tx = new Transaction().add(
       ...emptyTokenAccounts.map((tokenAccount) =>
@@ -112,7 +115,7 @@ export default function useSolana() {
           ]),
     )
 
-    let latestBlockhash = await connection.getLatestBlockhash();
+    let latestBlockhash = await connection.getLatestBlockhash()
 
     tx.feePayer = publicKey
     tx.recentBlockhash = latestBlockhash.blockhash
@@ -129,27 +132,33 @@ export default function useSolana() {
     // )
 
     while (true) {
-      await new Promise((resolve) => setTimeout(resolve, 3000)); 
-      var status = await connection.getSignatureStatuses([signature], { searchTransactionHistory: true })
+      await new Promise((resolve) => setTimeout(resolve, 3000))
+      var status = await connection.getSignatureStatuses([signature], {
+        searchTransactionHistory: true,
+      })
       if (status.value[0]?.err != null) {
         throw new Error(`Transaction failed: ${status.value[0]?.err}`)
       }
-      if (status.value[0]?.confirmationStatus == 'finalized' || status.value[0]?.confirmationStatus == 'confirmed')
-        break;
-    } 
-     
+      if (
+        status.value[0]?.confirmationStatus == 'finalized' ||
+        status.value[0]?.confirmationStatus == 'confirmed'
+      )
+        break
+    }
 
     await submitCloseTransaction({
       txHash: signature,
     })
 
-    mutateTokenAccounts()
-    mutateAccount()
+    await mutateTokenAccounts()
+    await mutateAccount()
+    await mutateBalance()
   }, [
     account,
     connection,
     emptyTokenAccounts,
     mutateAccount,
+    mutateBalance,
     mutateTokenAccounts,
     publicKey,
     sendTransaction,

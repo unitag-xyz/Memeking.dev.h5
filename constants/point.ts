@@ -1,1 +1,1 @@
-export const PER_ACCOUNT_POINT = 100
+export const PER_ACCOUNT_POINT = 1000
