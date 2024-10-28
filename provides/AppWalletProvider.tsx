@@ -151,7 +151,7 @@ ${resources.map((resource) => `- ${resource}`).join('\n')}`
         statusStore.isLogining = false
       }
 
-      // adapter.signIn 已经包含 connect 了，这里无需再 auto connect 了
+      // adapter.signIn already includes connect, no need to auto connect here
       return false
     },
     [handleError],

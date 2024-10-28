@@ -49,7 +49,7 @@ export default function usePart() {
 
       let hat = partRandom(hats!)
       if (hat && (hat.index === 1 || hat.index === 2 || hat.index === 3)) {
-        // 如果随机是皇冠的话使其与边框颜色一致
+        // If the random is a crown, make it the same color as the border.
         hat = hats?.find((hat) => hat.index === partsStore.border?.index)!
       }
 

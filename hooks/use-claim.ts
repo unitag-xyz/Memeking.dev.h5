@@ -121,7 +121,7 @@ export default function useClaim() {
     tx.recentBlockhash = latestBlockhash.blockhash
 
     const signature = await sendTransaction(tx, connection)
-    //const latestBlockhash = await connection.getLatestBlockhash() // 获取最新的区块哈希
+    //const latestBlockhash = await connection.getLatestBlockhash()
     // await connection.confirmTransaction(
     //   {
     //     signature: signature,

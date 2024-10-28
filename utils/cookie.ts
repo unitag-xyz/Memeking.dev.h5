@@ -2,7 +2,7 @@ import * as cookiesNext from 'cookies-next'
 
 import { isServer } from './detector'
 
-// 报错
+// Error
 // import { cookies } from 'next/headers'
 
 export function getCookie(name: string): string | undefined {

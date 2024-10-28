@@ -19,8 +19,8 @@ export default function BackgroundMusic() {
         api.start({
           from: { rotateZ: 0 },
           to: { rotateZ: 360 },
-          loop: true, // 无限循环
-          config: { duration: 2000 }, // 控制动画速度（2秒完成一次旋转）
+          loop: true, // Infinite loop
+          config: { duration: 2000 }, // Control animation speed (rotate once every 2 seconds)
         })
       } else {
         api.resume()

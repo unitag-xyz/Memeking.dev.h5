@@ -92,7 +92,7 @@ function Memeking({
 
         const tempCanvas = document.createElement('canvas') //Storage canvas
         tempCanvas.width = canvasWidth
-        tempCanvas.height = canvasHeight // 设置宽高
+        tempCanvas.height = canvasHeight // Set width and height
 
         const tempContext = tempCanvas.getContext('2d')!
 

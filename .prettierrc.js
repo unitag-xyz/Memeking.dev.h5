@@ -4,7 +4,7 @@ module.exports = {
   tabWidth: 2,
   semi: false,
   singleQuote: true,
-  trailingComma: 'all', // 在对象或数组最后一个元素后面是否加逗号
+  trailingComma: 'all', // Whether to add a comma after the last element in an object or array
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   importOrder: ['<THIRD_PARTY_MODULES>', '^@/(.*)$', '^[./]'],

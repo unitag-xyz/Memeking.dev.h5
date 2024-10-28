@@ -126,7 +126,7 @@ export default function useAccount() {
         lamports: solToLamports(targetLevelInfo.cost - levelInfo.cost),
       }),
     )
-    const latestBlockhash = await connection.getLatestBlockhash() // 获取最新的区块哈希
+    const latestBlockhash = await connection.getLatestBlockhash()
 
     tx.feePayer = publicKey
     tx.recentBlockhash = latestBlockhash.blockhash
