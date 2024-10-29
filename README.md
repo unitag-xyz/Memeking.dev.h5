@@ -14,4 +14,4 @@ $MMK, the first memecoin on Memeking.Club, is fairly distributed with no Dev & V
 3. **Meme Airdrop**: Connected with Memeking Badge, enabling all-chain memecoins to airdrop directly to targeted users. （Coming soon）
 4. **AI DIY**: Empowering all the memecoin community creates their favorite meme content—text, images, and videos. (Coming soon)
 5. **Meme Red Packet**: Airdrop memecoin to http://X.com accounts using stunning posters to expand its use cases and strengthen cultural impact (Coming soon)
-6.** LaunchPad & Meme Charity** (Coming soon)
+6. **LaunchPad & Meme Charity** (Coming soon)
