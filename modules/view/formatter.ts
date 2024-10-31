@@ -1,15 +1,32 @@
-export { formatAddressView }
+export { formatStyleValue, formatAddressView }
 
 /**
- * 合约地址的显示方法
+ * Format the given value into a string type value that can be used in styles.
  *
- * @param address - 合约地址全文
- * @param startLen - 显示的开头长度，默认为5
- * @param endLen - 显示的结尾长度，默认为4
- * @returns 可以显示的图片路径
+ * @param value - style value
+ * @returns strings used in styles
  */
-function formatAddressView(address: string | undefined, startLen: number = 5, endLen: number = 4) {
+function formatStyleValue(value: number | string) {
+  // Add px suffix to return when receiving number
+  if (Number.isInteger(value)) return value + 'px'
+  // Return directly when receiving a string
+  else return value as string
+}
+
+/**
+ * Format contract address strings
+ *
+ * @param address - contract address
+ * @param prefixLen - Length of the displayed prefix, default is 5
+ * @param suffixLen - Length of the displayed suffix, default is 4
+ * @returns result string
+ */
+function formatAddressView(
+  address: string | undefined,
+  prefixLen: number = 5,
+  suffixLen: number = 4,
+) {
   if (!address) return ''
 
-  return address.substring(0, startLen) + '****' + address.substring(address.length - endLen)
+  return address.substring(0, prefixLen) + '****' + address.substring(address.length - suffixLen)
 }

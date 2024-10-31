@@ -1,16 +1,16 @@
 export { DATA_EMPTY, DECIMAL_INPUT_MAX, DECIMAL_PERCENT_DEFAULT }
 
 /**
- * 显示数据的占位符
+ * Placeholder for empty data
  */
 const DATA_EMPTY = '-'
 
 /**
- * 用户输入时的最大小数位数
+ * Maximum number of decimal places for user input.
  */
 const DECIMAL_INPUT_MAX = 8
 
 /**
- * 百分比数值的默认小数位数
+ * Default decimal places for percentage values.
  */
 const DECIMAL_PERCENT_DEFAULT = 2
