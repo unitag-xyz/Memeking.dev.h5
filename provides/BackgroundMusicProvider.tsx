@@ -63,7 +63,9 @@ export default function BackgroundMusicProvider({ children }: { children: ReactN
         pause,
       }}
     >
-      <div onClick={firstClick}>{children}</div>
+      <div className="h-full" onClick={firstClick}>
+        {children}
+      </div>
     </BackgroundMusicContext.Provider>
   )
 }

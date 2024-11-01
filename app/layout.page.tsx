@@ -37,7 +37,7 @@ export default function RootLayout({
         SupercellMagicFont.variable,
       )}
     >
-      <body className="select-none">
+      <body className="h-screen select-none">
         <RainProvider>
           <AppWalletProvider>
             <CommonModalProvider>
@@ -45,9 +45,11 @@ export default function RootLayout({
                 <ModalProvider>
                   <InitProvider>
                     <BackgroundMusicProvider>
-                      <Navigator />
-                      {children}
-                      <Footer />
+                      <div className="flex h-full flex-col items-stretch">
+                        <Navigator />
+                        <div className="flex-1">{children}</div>
+                        <Footer />
+                      </div>
                     </BackgroundMusicProvider>
                   </InitProvider>
                 </ModalProvider>
