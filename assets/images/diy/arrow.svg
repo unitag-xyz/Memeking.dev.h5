@@ -1,0 +1,10 @@
+<svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" stroke="#563B00" />
+  <path
+    d="M18.0371 9.48633L12.4121 15.1113L18.0371 20.7363"
+    stroke="#563B00"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
