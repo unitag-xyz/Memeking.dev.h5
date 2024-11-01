@@ -97,3 +97,7 @@
     @apply text-[16px] tracking-[0.36px];
   }
 }
+
+.flip {
+  transform: rotateY(180deg);
+}
