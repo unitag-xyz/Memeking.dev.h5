@@ -4,6 +4,7 @@ import AddIcon from '@/assets/images/diy/add.svg'
 
 import { useDemoContext } from '../provider'
 import { ItemList } from './ItemList'
+import { ComposerCanvas } from './Canvas'
 
 export function Main() {
   const { test } = useDemoContext()
@@ -14,12 +15,18 @@ export function Main() {
     items[i] = i
   }
 
-  function showInput() {}
+  function showInput() {
+    console.log('### showInput')
+  }
 
   return (
     <div className="mx-[20px] md:mx-[40px]">
       <div className="mx-auto flex max-w-[1200px]">
-        <div className="w-[500px] shrink-0 bg-[linear-gradient(180deg,#FFE3B1_0%,#FFEFD4_100%)] pt-[40px]"></div>
+        <div className="w-[500px] shrink-0 bg-[linear-gradient(180deg,#FFE3B1_0%,#FFEFD4_100%)] pt-[40px]">
+          <div className="space-y-[10px]">
+            <ComposerCanvas className="h-[290px]" />
+          </div>
+        </div>
         <div className="flex-1 space-y-[30px] px-[20px] pt-[40px]">
           <div className="space-y-[10px]">
             <div className="text-[24px]">Background</div>
