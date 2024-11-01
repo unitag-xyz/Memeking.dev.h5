@@ -449,12 +449,12 @@ function AuthedMint() {
 
   const mintMemeking = useCallback(async () => {
     if (composeDataProps) {
-      toast.success(
-        'We’re working with Blowfish team to fix the security alert. Thanks for your patience.',
-        {
-          duration: 6000,
-        },
-      )
+      // toast.success(
+      //   'We’re working with Blowfish team to fix the security alert. Thanks for your patience.',
+      //   {
+      //     duration: 6000,
+      //   },
+      // )
       const close = showComing({
         title: 'Mint MemeKing',
         msg: 'Waiting for Confirmation ..',
