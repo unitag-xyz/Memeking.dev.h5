@@ -39,6 +39,7 @@ export function Main() {
     console.log("### handleAddImage");
     console.log(cCanvas.current);
     images.push("https://via.placeholder.com/150");
+    console.log(images);
     //cCanvas.current.handleOnload(null);
   }
 
@@ -55,7 +56,7 @@ export function Main() {
           <div className="mx-auto w-[340px]">
             <div className="mb-[30px] flex flex-col items-center gap-y-[10px]">
               <div className="h-[340px] w-[340px]"> 
-                <ComposerCanvas images={images} callback={handleAddImage} onValueChange={()=>console.log("onValChange")} className="" />
+                <ComposerCanvas images={images}  onValueChange={()=>console.log("onValChange")} className="" />
               </div>
               <div className="flex items-center gap-x-[10px]">
                 <AddButton className="cursor-pointer" onClick={handleAddImage} />

@@ -20,6 +20,7 @@ import {
   ImageSprite,
   TextSprite
 } from "./common/sprite.js"
+import { image } from '@nextui-org/theme';
 
 
 interface CustomCanvasProps extends CustomProps {
@@ -62,8 +63,7 @@ export function ComposerCanvas({
     context.save();
     context.fillStyle = 'grey';
     context.fillRect(0, 0, dprCanvasSize.Width, dprCanvasSize.Height);
-    context.restore();
-    console.log("### handleNext")
+    context.restore(); 
   }
 
   React.useEffect(() => {
@@ -74,7 +74,7 @@ export function ComposerCanvas({
     context.fillRect(0, 0, dprCanvasSize.Width, dprCanvasSize.Height);
     context.restore();
     console.log("### handleUseEffect")
-  });
+  },[images]);
 
   function addImage(url: string) {
     let image = new Image();
