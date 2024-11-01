@@ -1,7 +1,7 @@
 'use client'
 
 import { Input } from '@nextui-org/input'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import AddIcon from '@/assets/images/diy/add.svg'
 import AddButton from '@/assets/images/diy/button/add.svg'
@@ -15,7 +15,11 @@ import { ItemList } from './ItemList'
 import { ComposerCanvas } from './Canvas'
 import Slider from './Slider'
 
+
 export function Main() {
+
+  const cCanvas = useRef({});
+
   const index = 0
   const [itemType, setItemType] = useState<'image' | 'text'>()
   const [content, setContent] = useState('')
@@ -23,19 +27,25 @@ export function Main() {
   const [size, setSize] = useState(1)
   const [opacity, setOpacity] = useState(1)
 
+  let images = Array<string>();
+
   const items = new Array(10)
   for (let i = 0; i < items.length; i++) {
     items[i] = i
   }
 
   function handleAddText() { }
+  function handleAddImage() {
+    console.log("### handleAddImage");
+    console.log(cCanvas.current);
+    images.push("https://via.placeholder.com/150");
+    //cCanvas.current.handleOnload(null);
+  }
 
   function handleReset() { }
   function handleDelete() { }
 
-  useEffect(() => {
-    setItemType('text')
-  }, [])
+ 
 
   return (
     <div className="mx-[20px] md:mx-[40px]">
@@ -44,11 +54,11 @@ export function Main() {
 
           <div className="mx-auto w-[340px]">
             <div className="mb-[30px] flex flex-col items-center gap-y-[10px]">
-              <div className="h-[340px] w-[340px]">
-                <ComposerCanvas className="" />
+              <div className="h-[340px] w-[340px]"> 
+                <ComposerCanvas images={images} callback={handleAddImage} onValueChange={()=>console.log("onValChange")} className="" />
               </div>
               <div className="flex items-center gap-x-[10px]">
-                <AddButton className="cursor-pointer" />
+                <AddButton className="cursor-pointer" onClick={handleAddImage} />
                 <DownloadButton className="cursor-pointer" />
                 <SaveButton className="cursor-pointer" />
                 <ShareButton className="cursor-pointer" />
